@@ -1,0 +1,75 @@
+<div class="p-grid">
+
+  <div class="p-col-12 p-md-4 board-container">
+    <h4>A Faire</h4>
+
+    <div class="todo-board">
+
+      <div *ngIf="todoTasks.length > 0; then loopTodo else emptyTodo" ></div>
+      <ng-template #loopTodo>
+        <div *ngFor="let todo of todoTasks" class="card">
+          <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(todo)" (onDragEnd)="dragEnd()" (onDrop)="dropInTodo()">
+            <app-task-card [task]="todo">
+            </app-task-card>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #emptyTodo>
+        <div  class="empty" pDroppable="tasks" (onDrop)="dropInTodo()" >
+          <p>empty ...</p>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <div class="p-col-12 p-md-4 board-container">
+    <h4>En Cours</h4>
+
+    <div class="doing-board">
+
+      <div *ngIf="doingTasks.length > 0; then loopDoing else emptyDoing" ></div>
+      <ng-template #loopDoing>
+        <div *ngFor="let doing of doingTasks" class="card" >
+          <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(doing)" (onDragEnd)="dragEnd()" (onDrop)="dropInDoing()" >
+            <app-task-card [task]="doing">
+            </app-task-card>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #emptyDoing>
+        <div class="empty" pDroppable="tasks" (onDrop)="dropInDoing()" >
+          <p>empty ...</p>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <div class="p-col-12 p-md-4 board-container">
+    <h4>Terminé</h4>
+
+    <div class="done-board">
+
+      <div *ngIf="doneTasks.length > 0; then loopDone else emptyDone" ></div>
+      <ng-template #loopDone>
+        <div *ngFor="let done of doneTasks" class="card">
+          <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(done)" (onDragEnd)="dragEnd()" (onDrop)="dropInDone()">
+            <app-task-card [task]="done">
+            </app-task-card>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #emptyDone>
+        <div class="empty" pDroppable="tasks" (onDrop)="dropInDone()">
+          <p>empty ...</p>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+</div>

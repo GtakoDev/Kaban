@@ -1,0 +1,22 @@
+/*.p-card-content {
+  padding: 0;
+}
+
+.card__content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  padding: 0.5rem;
+}
+
+.card__header {
+  margin-left: 0.5rem;
+}*/
+
+.card__body {
+  width: 90%;
+  text-align: justify;
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}
