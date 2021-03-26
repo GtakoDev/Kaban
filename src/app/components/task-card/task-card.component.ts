@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Task} from '../../models/task';
 
 @Component({
@@ -10,6 +10,8 @@ export class TaskCardComponent implements OnInit {
 
   @Input() task: Task;
   @ViewChild('card__body') collapsibleDiv;
+  @Output() open: EventEmitter<any> = new EventEmitter<any>();
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
   collapsed: boolean;
 
   constructor() {
@@ -20,7 +22,13 @@ export class TaskCardComponent implements OnInit {
   }
 
   handleChange(event): void {
-    event.checked ? this.collapsibleDiv.nativeElement.style.display = 'block' : this.collapsibleDiv.nativeElement.style.display = 'none';
+    if (event.checked) {
+      this.collapsibleDiv.nativeElement.style.display = 'block';
+      this.open.emit(`Ouverture de la carte "${ this.task.name }"`);
+    } else {
+      this.close.emit(`Fermeture de la carte "${ this.task.name }"`);
+      this.collapsibleDiv.nativeElement.style.display = 'none';
+    }
   }
 
 }

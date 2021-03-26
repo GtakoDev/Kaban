@@ -9,7 +9,7 @@
       <ng-template #loopTodo>
         <div *ngFor="let todo of todoTasks" class="card">
           <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(todo)" (onDragEnd)="dragEnd()" (onDrop)="dropInTodo()">
-            <app-task-card [task]="todo">
+            <app-task-card (open)="onOpen($event)" (close)="onClose($event)" [task]="todo">
             </app-task-card>
           </div>
         </div>
@@ -33,7 +33,7 @@
       <ng-template #loopDoing>
         <div *ngFor="let doing of doingTasks" class="card" >
           <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(doing)" (onDragEnd)="dragEnd()" (onDrop)="dropInDoing()" >
-            <app-task-card [task]="doing">
+            <app-task-card  (open)="onOpen($event)" (close)="onClose($event)" [task]="doing">
             </app-task-card>
           </div>
         </div>
@@ -57,7 +57,7 @@
       <ng-template #loopDone>
         <div *ngFor="let done of doneTasks" class="card">
           <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="dragStart(done)" (onDragEnd)="dragEnd()" (onDrop)="dropInDone()">
-            <app-task-card [task]="done">
+            <app-task-card  (open)="onOpen($event)" (close)="onClose($event)" [task]="done">
             </app-task-card>
           </div>
         </div>

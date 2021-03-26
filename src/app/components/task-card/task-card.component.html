@@ -1,11 +1,12 @@
-<p-card header="{{ task.name }}">
+<p-card >
+
+  <div class="p-card-title">
+    {{ task.name }}
+    <p-toggleButton [(ngModel)]="this.collapsed" onLabel="" offLabel="" onIcon="pi pi-minus"
+                    offIcon="pi pi-plus"  (onChange)="handleChange($event)"></p-toggleButton>
+  </div>
 
   <div class="card__content">
-
-    <div class="card__header">
-      <p-toggleButton [(ngModel)]="this.collapsed" onLabel="" offLabel="" onIcon="pi pi-minus"
-                      offIcon="pi pi-plus" class="collapse__button" (onChange)="handleChange($event)"></p-toggleButton>
-    </div>
 
     <div #card__body class="card__body">
       <p>{{ task.description }}</p>
@@ -13,8 +14,8 @@
 
   </div>
 
-  <ng-template pTemplate="footer">
-    {{ task.type }}
+  <div class="p-card-footer">
+    <p>Type : {{ task.type }}</p>
     <button pButton type="button" icon="pi pi-pencil" label="Editer"></button>
-  </ng-template>
+  </div>
 </p-card>

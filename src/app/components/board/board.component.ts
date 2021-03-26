@@ -35,6 +35,16 @@ export class BoardComponent implements OnInit {
     this.doneTasks = [];
   }
 
+  // listeners to task events
+
+  onOpen(message: string): void {
+  console.log(message);
+  }
+
+  onClose(message: string): void {
+    console.log(message);
+  }
+
   // Draggable events
 
   dragStart(task: Task): void {
@@ -100,5 +110,4 @@ export class BoardComponent implements OnInit {
       this.doneTasks = this.doneTasks.filter((value) => value !== this.draggedTask);
     }
   }
-
 }
