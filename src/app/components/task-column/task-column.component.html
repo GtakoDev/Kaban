@@ -1,0 +1,19 @@
+   <div class="board">
+
+    <div *ngIf="tasks.length > 0; then loopDone else emptyDone" ></div>
+    <ng-template #loopDone>
+      <div *ngFor="let done of tasks" class="card">
+        <div pDraggable="tasks" pDroppable="tasks" (onDragStart)="onDragStart(done)" (onDragEnd)="onDragEnd()" (onDrop)="onDrop()">
+          <app-task-card  (open)="onOpen($event)" (close)="onClose($event)" [task]="done">
+          </app-task-card>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #emptyDone>
+      <div class="empty" pDroppable="tasks" (onDrop)="onDrop()">
+        <p>empty ...</p>
+      </div>
+    </ng-template>
+
+  </div>

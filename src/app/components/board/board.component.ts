@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {TreeDragDropService} from 'primeng/api';
-import {MessageService} from 'primeng/api';
-import {Task} from '../../models/task';
+import Task from '../../models/task';
 import {TaskService} from '../../services/task.service';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  providers: [TreeDragDropService, MessageService],
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
@@ -22,6 +19,8 @@ export class BoardComponent implements OnInit {
 
   draggedTask: Task;
 
+  source: string;
+
   constructor(private taskService: TaskService) {
   }
 
@@ -33,6 +32,7 @@ export class BoardComponent implements OnInit {
     this.todoTasks = [];
     this.doingTasks = [];
     this.doneTasks = [];
+    this.source = null;
   }
 
   // listeners to task events
@@ -45,69 +45,58 @@ export class BoardComponent implements OnInit {
     console.log(message);
   }
 
-  // Draggable events
-
-  dragStart(task: Task): void {
-    this.draggedTask = task;
+  onDragStart(value: any): void {
+    this.draggedTask = value.task;
+    this.source = value.source;
   }
 
-  dragEnd(): void {
+  onDragEnd(): void {
     this.draggedTask = null;
+    this.source = null;
   }
 
-  // Droppable events
-
-  dropInTodo(): void {
-    console.log('Dropping in Todo');
+  onDrop(target: string): void {
     if (this.draggedTask) {
-      const sourceArray = this.getDraggedTaskSourceArray();
-      console.log(`Dragged Task Source :\n TodoTasks (${sourceArray.isTodo}) \n DoingTasks (${sourceArray.isDoing}) \n DoneTasks (${sourceArray.isDone})`);
-      this.deleteDragTaskFromSourceArray(sourceArray);
-      this.todoTasks = [...this.todoTasks, this.draggedTask];
+      console.log(`Dragged Task Source : ${ this.source }`);
+      this.deleteDraggedTaskFromSourceArray();
+      this.addDraggedTaskToTargetArray(target);
       this.draggedTask = null;
-      console.log('Dropping in Todo [SUCCESS]');
+      this.source = null;
     }
   }
 
-  dropInDoing(): void {
-    console.log('Dropping in Doing');
-    if (this.draggedTask) {
-      const sourceArray = this.getDraggedTaskSourceArray();
-      console.log(`Dragged Task Source :\n TodoTasks (${sourceArray.isTodo}) \n DoingTasks (${sourceArray.isDoing}) \n DoneTasks (${sourceArray.isDone})`);
-      this.deleteDragTaskFromSourceArray(sourceArray);
-      this.doingTasks = [...this.doingTasks, this.draggedTask];
-      this.draggedTask = null;
-      console.log('Dropping in Doing [SUCCESS]');
+  private deleteDraggedTaskFromSourceArray(): void {
+    switch (this.source) {
+      case 'todo':
+        this.todoTasks = this.todoTasks.filter((value) => value !== this.draggedTask);
+        break;
+      case 'doing':
+        this.doingTasks = this.doingTasks.filter((value) => value !== this.draggedTask);
+        break;
+      case 'done':
+        this.doneTasks = this.doneTasks.filter((value) => value !== this.draggedTask);
+        break;
+      default:
+        alert('No Source Array Found !');
+        break;
     }
   }
 
-  dropInDone(): void {
-    console.log('Dropping in Done');
-    if (this.draggedTask) {
-      const sourceArray = this.getDraggedTaskSourceArray();
-      console.log(`Dragged Task Source :\n TodoTasks (${sourceArray.isTodo}) \n DoingTasks (${sourceArray.isDoing}) \n DoneTasks (${sourceArray.isDone})`);
-      this.deleteDragTaskFromSourceArray(sourceArray);
-      this.doneTasks = [...this.doneTasks, this.draggedTask];
-      this.draggedTask = null;
-      console.log('Dropping in Done [SUCCESS]');
+  private addDraggedTaskToTargetArray(target: string): void {
+    switch (target) {
+      case 'todo':
+        this.todoTasks = [...this.todoTasks, this.draggedTask];
+        break;
+      case 'doing':
+        this.doingTasks = [...this.doingTasks, this.draggedTask];
+        break;
+      case 'done':
+        this.doneTasks = [...this.doneTasks, this.draggedTask];
+        break;
+      default:
+        alert('No Target Array Found !');
+        break;
     }
   }
 
-  private getDraggedTaskSourceArray(): { isTodo: boolean, isDoing: boolean, isDone: boolean } {
-    return {
-      isTodo: this.todoTasks.includes(this.draggedTask),
-      isDoing: this.doingTasks.includes(this.draggedTask),
-      isDone: this.doneTasks.includes(this.draggedTask)
-    };
-  }
-
-  private deleteDragTaskFromSourceArray(sourceBoolean: { isTodo: boolean, isDoing: boolean, isDone: boolean }): void {
-    if (sourceBoolean.isTodo) {
-      this.todoTasks = this.todoTasks.filter((value) => value !== this.draggedTask);
-    } else if (sourceBoolean.isDoing) {
-      this.doingTasks = this.doingTasks.filter((value) => value !== this.draggedTask);
-    } else if (sourceBoolean.isDone) {
-      this.doneTasks = this.doneTasks.filter((value) => value !== this.draggedTask);
-    }
-  }
 }

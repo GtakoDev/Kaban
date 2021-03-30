@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {Task} from '../models/task';
+import Task from '../models/task';
 import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({

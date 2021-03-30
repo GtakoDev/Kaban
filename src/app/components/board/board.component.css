@@ -1,17 +1,15 @@
-.todo-board, .doing-board, .done-board {
+.board {
   padding: 1rem;
   min-height: 6rem;
   width: 100%;
   border-radius: 0.4rem;
 }
 
-.card {
-  padding: 0.5rem;
-}
 
 .todo-board {
   background-color: #e76f51;
 }
+
 .doing-board {
   background-color: #e9c46a;
 }
@@ -20,9 +18,4 @@
   background-color: #2a9d8f;
 }
 
-.empty {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 0.4em;
-}
+

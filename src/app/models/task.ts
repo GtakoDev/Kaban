@@ -1,4 +1,4 @@
-export interface Task {
+export default interface Task {
   readonly id: number;
   readonly name: string;
   readonly description: string;

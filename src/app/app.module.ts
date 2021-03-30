@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { BoardComponent } from './components/board/board.component';
 import { TaskCardComponent } from './components/task-card/task-card.component';
+import { TaskColumnComponent } from './components/task-column/task-column.component';
 
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './services/in-memory-data.service';
@@ -21,12 +22,15 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import { SearchComponent } from './components/search/search.component';
 import {InputTextModule} from 'primeng/inputtext';
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    TaskColumnComponent,
     BoardComponent,
     TaskCardComponent,
-    SearchComponent
+    SearchComponent,
+
   ],
   imports: [
     BrowserModule,
